@@ -1,0 +1,34 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+html, body, #map {
+  height: 100%;
+}
+
+#nav {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  width: 150px;
+}
+
+#date-range {
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+
+.place {
+  font-weight: bold;
+}
+
+.country {
+  color: #666;
+}
+
+.mag {
+  font-weight: bold;
+  color: red;
+  display: inline-block;
+  margin-right: 10px;
+}
