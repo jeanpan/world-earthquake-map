@@ -78,6 +78,8 @@
         };
 
         var earthquakeClick = function(feature, layer) {
+          console.log(feature.properties);
+
           var place = feature.properties.place,
               arr = place.split(", "),
               loc = arr[0],
@@ -86,7 +88,7 @@
           var content = '<p class="place">' + loc + '</p>' +
                         '<p class="country">' + country + '</p>' +
                         '<p class="desc"><span class="mag">' + feature.properties.mag + '</span>' +
-                        '<a href="' + feature.properties.place + '" target="_blank">More</a></p>';
+                        '<a href="' + feature.properties.url + '" target="_blank">More</a></p>';
 
           layer.bindPopup(content);
         }
