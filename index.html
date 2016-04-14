@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>World Earthquake Interactive Map</title>
+  <title>World Earthquake Map In Last 7 Days</title>
   <!-- For full screen Leaflet maps, add the following meta tag to set parameters in the viewport. -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
@@ -21,13 +21,15 @@
   <div id="map"></div>
 
   <div id="nav">
-    <h1>World Earthquake Map</h1>
+
+    <h1>World Earthquake Map In Last 7 Days</h1>
     <p>
-      This is an interactive map which shows earthquake happend in the world based on the period of time you selected. <br>
+      This is an interactive map which shows earthquake happend in the world in the last 7 days. <br>
     </p>
-    <select class="form-control" id="date-range">
-    </select>
-    <p>You also can click on the point to see more information about the earthquake.</p>
+    <p>Click on the earthquake happend circle to know more information or click on the play button to see the eqrthquake happend timeline. </p>
+    <p><a href="#" id="clear">Clear</a> the layer to see the timeline change more precisely. </p>
+    <p>Earthquake data is from <a href="http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php" target="_blank">USGS</a> which provides GeoJSON files. </p>
+    <p class="footer">created by <a href="http://jeanpan.github.io/" target="_blank">jeanpan</a> with <span class="love">❤</span></p>
 
   </div>
 

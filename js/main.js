@@ -5,7 +5,7 @@
     init: function() {
       var self = this;
 
-      self.map = L.map('map').setView([25.091075, 121.559834], 3),
+      self.map = L.map('map').setView([9.102097, 77.343750], 2),
       self.earthquakeGeoJson = '';
       self.timeline = '';
 
@@ -15,128 +15,119 @@
 
       self.map.addLayer(CartoDBTiles);
 
-      self.createRangeList();
+      var start = (moment().subtract(7, 'days')).format('YYYY-MM-DD'),
+          end = (moment()).format('YYYY-MM-DD');
 
-      var dates = self.parseDateRange($("#date-range :selected").val());
+      self.getData(start, end);
 
-      self.render(dates[0], dates[1]);
-
-      $('#date-range').change(function() {
-        var dates = self.parseDateRange($(this).val());
-        self.render(dates[0], dates[1]);
+      $('#clear').on('click', function(event) {
+        event.preventDefault();
+        self.map.removeLayer(self.earthquakeGeoJson);
       });
 
     },
 
-    parseDateRange: function(str) {
-      // format: 2016-02-21 - 2016-02-22
-      return str.split(" - ");
+    popUpContent: function(feature) {
+      var place = feature.properties.place,
+          arr = place.split(", "),
+          loc = arr[0],
+          country = arr[1];
+
+      var content = '<p class="place">' + loc + '</p>' +
+                    '<p class="country">' + country + '</p>' +
+                    '<p class="desc"><span class="mag">' + feature.properties.mag + '</span>' +
+                    '<a href="' + feature.properties.url + '" target="_blank">More</a></p>';
+      return content;
     },
 
-    createRangeList: function() {
-      var ranges = {
-        //'Yesterday': [moment().subtract(1, 'days'), moment()],
-        //'Last 3 Days': [moment().subtract(3, 'days'), moment()],
-        'Last 7 Days': [moment().subtract(7, 'days'), moment()],
-        //'Last 10 Days': [moment().subtract(10, 'days'), moment()],
-        //'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-        //'This week': [moment().startOf('week'), moment()],
-        //'This month': [moment().startOf('month'), moment().endOf('month')]
+    pointRadius: function(feature) {
+      return Math.pow(2, feature.properties.mag) / 2;
+    },
+
+    renderTimeline: function(data) {
+      var self = this;
+
+      var getInterval = function(quake) {
+        // earthquake data only has a time, so we'll use that as a "start"
+        // and the "end" will be that + some value based on magnitude
+        // 18000000 = 30 minutes, so a quake of magnitude 5 would show on the
+        // map for 150 minutes or 2.5 hours
+        return {
+          start: quake.properties.time,
+          end:   quake.properties.time + quake.properties.mag * 1800000
+        };
       };
 
-      var options = '';
-
-      $.each(ranges, function(i, val) {
-        var start = val[0].format('YYYY-MM-DD'),
-            end = val[1].format('YYYY-MM-DD');
-
-        options += '<option value="' + start + ' - ' + end + '">' + i + '</option>';
+      var timelineControl = L.timelineSliderControl({
+        formatOutput: function(date) {
+          return new Date(date).toString();
+        }
       });
 
-      $('#date-range').html(options);
+      var timeline = L.timeline(data, {
+        getInterval: getInterval,
+        pointToLayer: function(data, latlng){
+          return L.circleMarker(latlng, {
+            radius: self.pointRadius(data),
+            color: '#FFFF00',
+            fillColor: '#3EC300'
+          }).bindPopup(self.popUpContent(data));
+        }
+      });
+
+      timelineControl.addTo(self.map);
+
+      timelineControl.addTimelines(timeline);
+
+      timeline.addTo(self.map);
     },
 
-    render: function(start, end) {
+    renderData: function(data) {
+      var self = this;
+
+      var earthquakePoint = function(feature, latlng) {
+        var mag = feature.properties.mag,
+            earthquakeMarker = L.circleMarker(latlng, {
+              stroke: false,
+              fillColor: '#3EC300',
+              fillOpacity: 0.2,
+              radius: self.pointRadius(feature)
+            });
+
+        return earthquakeMarker;
+      };
+
+      var earthquakeClick = function(feature, layer) {
+        layer.bindPopup(self.popUpContent(feature));
+      }
+
+      self.earthquakeGeoJson = L.geoJson(data, {
+        pointToLayer: earthquakePoint,
+        onEachFeature: earthquakeClick
+      }).addTo(self.map);
+
+    },
+
+    getData: function(start, end) {
       var self = this;
       var url = 'http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' + start + '&endtime=' + end;
+
       console.log(url);
 
-      self.map.removeLayer(self.earthquakeGeoJson);
+      // self.map.removeLayer(self.earthquakeGeoJson);
 
       $.getJSON(url, function(data) {
 
-
-        var getInterval = function(quake) {
-          // earthquake data only has a time, so we'll use that as a "start"
-          // and the "end" will be that + some value based on magnitude
-          // 18000000 = 30 minutes, so a quake of magnitude 5 would show on the
-          // map for 150 minutes or 2.5 hours
-          return {
-            start: quake.properties.time,
-            end:   quake.properties.time + quake.properties.mag * 1800000
-          };
-        };
-        var timelineControl = L.timelineSliderControl({
-          formatOutput: function(date) {
-            return new Date(date).toString();
-          }
-        });
-        self.timeline = L.timeline(data, {
-          getInterval: getInterval,
-          pointToLayer: function(data, latlng){
-            var hue_min = 120;
-            var hue_max = 0;
-            var hue = data.properties.mag / 10 * (hue_max - hue_min) + hue_min;
-            return L.circleMarker(latlng, {
-              radius: data.properties.mag * 3,
-              color: "hsl("+hue+", 100%, 50%)",
-              fillColor: "hsl("+hue+", 100%, 50%)"
-            }).bindPopup('<a href="'+data.properties.url+'">click for more info</a>');
-          }
-        });
-        timelineControl.addTo(self.map);
-        timelineControl.addTimelines(self.timeline);
-        self.timeline.addTo(self.map);
-
-
         var earthquakeData = data;
 
-        var earthquakePoint = function(feature, latlng) {
-          var mag = feature.properties.mag,
-              earthquakeMarker = L.circleMarker(latlng, {
-                stroke: false,
-                fillColor: '#3EC300',
-                fillOpacity: 0.2,
-                radius: Math.pow(2, mag) / 2
-              });
+        self.renderTimeline(earthquakeData);
 
-          return earthquakeMarker;
-        };
-
-        var earthquakeClick = function(feature, layer) {
-          console.log(feature.properties);
-
-          var place = feature.properties.place,
-              arr = place.split(", "),
-              loc = arr[0],
-              country = arr[1];
-
-          var content = '<p class="place">' + loc + '</p>' +
-                        '<p class="country">' + country + '</p>' +
-                        '<p class="desc"><span class="mag">' + feature.properties.mag + '</span>' +
-                        '<a href="' + feature.properties.url + '" target="_blank">More</a></p>';
-
-          layer.bindPopup(content);
-        }
-
-        self.earthquakeGeoJson = L.geoJson(earthquakeData, {
-          pointToLayer: earthquakePoint,
-          onEachFeature: earthquakeClick
-        }).addTo(self.map);
+        self.renderData(earthquakeData);
 
       });
 
-    }
+    },
+
   }
 
   earthquakeMap.init();

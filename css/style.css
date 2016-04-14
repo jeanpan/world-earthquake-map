@@ -12,6 +12,29 @@ h1 {
   margin: 0;
 }
 
+a {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0080ff;
+  text-decoration: none;
+}
+
+.love {
+  color: #ff4d4d;
+}
+
+.footer {
+  text-align: right;
+  font-size: 12px;
+}
+
+.footer a {
+  font-weight: normal;
+}
+
 #nav {
   box-sizing: border-box;
   padding: 15px;
@@ -19,9 +42,11 @@ h1 {
   right: 20px;
   top: 20px;
   width: 300px;
-  height: 350px;
+  height: 400px;
   background: rgba(255,255,255,0.8);
   box-shadow: 0px 0px 0px 8px rgba(255,255,255,0.3);
+  display: flex;
+  flex-direction: column;
 }
 
 #nav p {
@@ -47,4 +72,58 @@ h1 {
   color: red;
   display: inline-block;
   margin-right: 10px;
+}
+
+/* overwrite leaflet css */
+.leaflet-bottom.leaflet-left {
+  width: 70%;
+}
+.leaflet-control.leaflet-timeline-control {
+  margin: 20px 0;
+  display: flex;
+  background: transparent;
+  box-shadow: none;
+  text-align: left;
+}
+.button-container .prev {
+  display: none;
+}
+.button-container .next {
+  display: none;
+}
+.leaflet-control-layers-expanded {
+  padding: 10px;
+}
+.leaflet-control.leaflet-timeline-control .button-container button {
+  height: 30px;
+  text-align: center;
+}
+.leaflet-control.leaflet-timeline-control .sldr-ctrl-container {
+  width: 35%;
+  margin-right: 10px;
+}
+.leaflet-control.leaflet-timeline-control input[type=range] {
+  flex: 1;
+  margin-right: 10px;
+}
+.leaflet-container .leaflet-control-attribution {
+  background: transparent;
+  margin: 0;
+  color: #fff;
+}
+.leaflet-container .leaflet-control-attribution, .leaflet-container .leaflet-control-scale {
+  font-size: 10px;
+}
+.leaflet-control-layers {
+  border-radius: 0;
+}
+.leaflet-bar a:last-child {
+  border-radius: 0;
+}
+.leaflet-bar a:first-child {
+  border-radius: 0;
+}
+output {
+  color: #999;
+  font-size: 12px;
 }
