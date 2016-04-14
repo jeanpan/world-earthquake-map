@@ -9,6 +9,9 @@
   <link type="text/css" rel="stylesheet" href="libraries/bootstrap/css/bootstrap.min.css"/>
   <!-- Including Leaflet CSS -->
   <link type="text/css" rel="stylesheet" href="libraries/leaflet/leaflet.css"/>
+
+  <link type="text/css" rel="stylesheet" href="libraries/leaflet.timeline/leaflet.timeline.min.css"/>
+
   <!-- Including custom CSS -->
   <link type="text/css" rel="stylesheet" href="css/style.css"/>
 </head>
@@ -18,14 +21,22 @@
   <div id="map"></div>
 
   <div id="nav">
+    <h1>World Earthquake Map</h1>
+    <p>
+      This is an interactive map which shows earthquake happend in the world based on the period of time you selected. <br>
+    </p>
     <select class="form-control" id="date-range">
     </select>
+    <p>You also can click on the point to see more information about the earthquake.</p>
+
   </div>
 
 </body>
 
 <script type="text/javascript" src="libraries/jquery/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="libraries/leaflet/leaflet.js"></script>
+<script type="text/javascript" src="libraries/leaflet.timeline/leaflet.timeline.min.js"></script>
+
 <script type="text/javascript" src="libraries/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="libraries/moment/moment.js"></script>
 

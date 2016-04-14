@@ -7,6 +7,7 @@
 
       self.map = L.map('map').setView([25.091075, 121.559834], 3),
       self.earthquakeGeoJson = '';
+      self.timeline = '';
 
       var CartoDBTiles = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
         attribution: 'Map Data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> Contributors, Map Tiles &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
@@ -34,13 +35,13 @@
 
     createRangeList: function() {
       var ranges = {
-        'Yesterday': [moment().subtract(1, 'days'), moment()],
-        'Last 3 Days': [moment().subtract(3, 'days'), moment()],
+        //'Yesterday': [moment().subtract(1, 'days'), moment()],
+        //'Last 3 Days': [moment().subtract(3, 'days'), moment()],
         'Last 7 Days': [moment().subtract(7, 'days'), moment()],
-        'Last 10 Days': [moment().subtract(10, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(30, 'days'), moment()],
-        'This week': [moment().startOf('week'), moment()],
-        'This month': [moment().startOf('month'), moment().endOf('month')]
+        //'Last 10 Days': [moment().subtract(10, 'days'), moment()],
+        //'Last 30 Days': [moment().subtract(30, 'days'), moment()],
+        //'This week': [moment().startOf('week'), moment()],
+        //'This month': [moment().startOf('month'), moment().endOf('month')]
       };
 
       var options = '';
@@ -63,6 +64,41 @@
       self.map.removeLayer(self.earthquakeGeoJson);
 
       $.getJSON(url, function(data) {
+
+
+        var getInterval = function(quake) {
+          // earthquake data only has a time, so we'll use that as a "start"
+          // and the "end" will be that + some value based on magnitude
+          // 18000000 = 30 minutes, so a quake of magnitude 5 would show on the
+          // map for 150 minutes or 2.5 hours
+          return {
+            start: quake.properties.time,
+            end:   quake.properties.time + quake.properties.mag * 1800000
+          };
+        };
+        var timelineControl = L.timelineSliderControl({
+          formatOutput: function(date) {
+            return new Date(date).toString();
+          }
+        });
+        self.timeline = L.timeline(data, {
+          getInterval: getInterval,
+          pointToLayer: function(data, latlng){
+            var hue_min = 120;
+            var hue_max = 0;
+            var hue = data.properties.mag / 10 * (hue_max - hue_min) + hue_min;
+            return L.circleMarker(latlng, {
+              radius: data.properties.mag * 3,
+              color: "hsl("+hue+", 100%, 50%)",
+              fillColor: "hsl("+hue+", 100%, 50%)"
+            }).bindPopup('<a href="'+data.properties.url+'">click for more info</a>');
+          }
+        });
+        timelineControl.addTo(self.map);
+        timelineControl.addTimelines(self.timeline);
+        self.timeline.addTo(self.map);
+
+
         var earthquakeData = data;
 
         var earthquakePoint = function(feature, latlng) {

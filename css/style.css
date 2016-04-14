@@ -7,14 +7,30 @@ html, body, #map {
   height: 100%;
 }
 
+h1 {
+  font-size: 180%;
+  margin: 0;
+}
+
 #nav {
+  box-sizing: border-box;
+  padding: 15px;
   position: fixed;
-  right: 10px;
-  top: 10px;
-  width: 150px;
+  right: 20px;
+  top: 20px;
+  width: 300px;
+  height: 350px;
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0px 0px 0px 8px rgba(255,255,255,0.3);
+}
+
+#nav p {
+  margin: 10px 0;
 }
 
 #date-range {
+  margin: 20px 0;
+  width: 150px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.65);
 }
 
