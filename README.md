@@ -1,8 +1,19 @@
-# [World Earthquake Interactive Map](http://jeanpan.github.io/earthquakeMap/)
+World Earthquake Map In Last 7 Days
+==================================
 
-Created with [Leaflet.js](http://leafletjs.com/).
+An interactive map showing earthquakes that happened worldwide in the last 7 days.
 
-Data is from [USGS Feeds](http://earthquake.usgs.gov/earthquakes/feed/).
+Created with [Leaflet.js](http://leafletjs.com/) & [Leaflet.timeline](https://github.com/skeate/Leaflet.timeline).
 
-![Image of World Earthquake Interactive Map]
-(http://jeanpan.github.io/earthquakeMap/image/earthquakeMap.png)
+[World Earthquake Map In Last 7 Days](http://jeanpan.github.io/World-Earthquake-Map/)
+
+## Data Source
+- Earthquake GeoJSON from [USGS Feeds](http://earthquake.usgs.gov/earthquakes/feed/).
+
+## Run Locally
+```
+$ git clone https://github.com/jeanpan/World-Earthquake-Map.git
+$ cd World-Earthquake-Map/
+$ npm install -g bower
+$ bower install
+```
