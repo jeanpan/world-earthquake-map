@@ -16,13 +16,21 @@
       self.map.addLayer(CartoDBTiles);
 
       var start = (moment().subtract(7, 'days')).format('YYYY-MM-DD'),
-          end = (moment()).format('YYYY-MM-DD');
+          end = (moment().add(1, 'days')).format('YYYY-MM-DD');
 
       self.getData(start, end);
 
       $('#clear').on('click', function(event) {
         event.preventDefault();
         self.map.removeLayer(self.earthquakeGeoJson);
+      });
+
+      $('#add').on('click', function(event) {
+        event.preventDefault();
+        // remove first in case duplicate layer
+        self.map.removeLayer(self.earthquakeGeoJson);
+
+        self.map.addLayer(self.earthquakeGeoJson);
       });
 
     },
@@ -48,10 +56,6 @@
       var self = this;
 
       var getInterval = function(quake) {
-        // earthquake data only has a time, so we'll use that as a "start"
-        // and the "end" will be that + some value based on magnitude
-        // 18000000 = 30 minutes, so a quake of magnitude 5 would show on the
-        // map for 150 minutes or 2.5 hours
         return {
           start: quake.properties.time,
           end:   quake.properties.time + quake.properties.mag * 1800000
@@ -112,9 +116,7 @@
       var self = this;
       var url = 'http://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=' + start + '&endtime=' + end;
 
-      console.log(url);
-
-      // self.map.removeLayer(self.earthquakeGeoJson);
+      // console.log(url);
 
       $.getJSON(url, function(data) {
 
@@ -129,7 +131,7 @@
     },
 
   }
-
+  // init the Map.
   earthquakeMap.init();
 
 })();
