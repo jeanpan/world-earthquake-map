@@ -1,0 +1,24 @@
+{
+  "name": "earthquakeMap",
+  "homepage": "https://github.com/jeanpan/earthquakeMap",
+  "authors": [
+    "jeanpan <beats.1213@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "leaflet": "^0.7.7",
+    "moment": "^2.12.0",
+    "bootstrap": "^3.3.6",
+    "leaflet.timeline": "git@github.com:skeate/Leaflet.timeline.git#^0.4.3"
+  }
+}
