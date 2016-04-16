@@ -1,11 +1,11 @@
 {
   "name": "leaflet.timeline",
-  "version": "0.4.3",
+  "version": "1.0.0-beta",
   "authors": [
     "Jonathan Skeate <skeate@gmail.com>"
   ],
   "description": "Show GeoJSON objects on a timeline",
-  "main": "dist/leaflet.timeline.js",
+  "main": "dist/leaflet.timeline.min.js",
   "keywords": [
     "leaflet",
     "timeline",
@@ -19,12 +19,7 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
-  ],
-  "dependencies": {
-    "leaflet": "0.7.3 - 0.8.0"
-  },
-  "devDependencies": {
-    "moment": "~2.8.4"
-  }
+    "tests",
+    "coverage"
+  ]
 }

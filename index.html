@@ -6,11 +6,9 @@
   <!-- For full screen Leaflet maps, add the following meta tag to set parameters in the viewport. -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-  <link type="text/css" rel="stylesheet" href="libraries/bootstrap/css/bootstrap.min.css"/>
-  <!-- Including Leaflet CSS -->
-  <link type="text/css" rel="stylesheet" href="libraries/leaflet/leaflet.css"/>
-
-  <link type="text/css" rel="stylesheet" href="libraries/leaflet.timeline/leaflet.timeline.min.css"/>
+  <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+  <link type="text/css" rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css"/>
+  <link type="text/css" rel="stylesheet" href="bower_components/leaflet.timeline/dist/leaflet.timeline.min.css"/>
 
   <!-- Including custom CSS -->
   <link type="text/css" rel="stylesheet" href="css/style.css"/>
@@ -29,20 +27,16 @@
     <p>The radius of the circle is the magnitude of the earthquake. Click on the circle to know more information or click on the play button to see the eqrthquake happened timeline. </p>
     <p><a href="#" id="clear">Show only the earthquakes as they happen</a> or <a href="#" id="add">Show earthquakes cumulatively.</a></p>
     <p>Earthquake data is from <a href="http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php" target="_blank">USGS</a> which provides GeoJSON files. </p>
-    <p class="footer">Created by <a href="https://github.com/jeanpan" target="_blank">jeanpan</a> with <span class="love">❤</span>.</p>
 
   </div>
 
+  <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="bower_components/leaflet/dist/leaflet.js"></script>
+  <script type="text/javascript" src="bower_components/leaflet.timeline/dist/leaflet.timeline.min.js"></script>
+  <script type="text/javascript" src="bower_components/moment/moment.js"></script>
+
+  <script type="text/javascript" src="js/main.js"></script>
+
 </body>
-
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="bower_components/leaflet/dist/leaflet.js"></script>
-
-<script type="text/javascript" src="libraries/leaflet.timeline/leaflet.timeline.min.js"></script>
-
-<script type="text/javascript" src="libraries/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="libraries/moment/moment.js"></script>
-
-<script type="text/javascript" src="js/main.js"></script>
 
 </html>
