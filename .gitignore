@@ -41,3 +41,7 @@ Thumbs.db
 *.pyo
 *.pyc
 *~
+
+# bower packages #
+##########
+/bower_components/*
