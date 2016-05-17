@@ -5,7 +5,7 @@ An interactive map showing earthquakes that happened worldwide in the last 7 day
 
 Created with [Leaflet.js](http://leafletjs.com/) & [Leaflet.timeline](https://github.com/skeate/Leaflet.timeline).
 
-[World Earthquake Map In Last 7 Days](http://jeanpan.github.io/World-Earthquake-Map/)
+[World Earthquake Map In Last 7 Days](http://jeanpan.github.io/world-earthquake-map/)
 
 ## Data Source
 - Earthquake GeoJSON from [USGS Feeds](http://earthquake.usgs.gov/earthquakes/feed/).
